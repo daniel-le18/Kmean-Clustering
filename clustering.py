@@ -38,13 +38,19 @@ def preprocess(tweet_data):
         to_replace=[r"(#[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"],
         value=[""],
     )
+
+    # Convert tweets to lowercase
+    tweet_data = tweet_data.apply(lambda x: x.astype(str).str.lower())
+
     return tweet_data
 
 
 if __name__ == "__main__":
+    # Read in and process data
     tweet_data = read_csv()
     tweet_data = preprocess(tweet_data)
 
+    # Print
     print(tweet_data)
 
     # Distance testing
@@ -53,7 +59,7 @@ if __name__ == "__main__":
     distance = Jaccard_distance(set1, set2)
     print(distance)
 
+    # TODO: Spliting each row into a set then pass to distance
+
     # for i in range(tweet_data.shape[0]):
     #     print(tweet_data.iloc[[i]])
-
-    # TODO: Spliting each row into a set then pass to distance
