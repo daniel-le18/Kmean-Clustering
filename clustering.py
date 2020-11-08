@@ -60,6 +60,6 @@ if __name__ == "__main__":
     print(distance)
 
     # TODO: Spliting each row into a set then pass to distance
-
+    # TODO: K means
     # for i in range(tweet_data.shape[0]):
     #     print(tweet_data.iloc[[i]])
