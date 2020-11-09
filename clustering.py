@@ -54,8 +54,8 @@ if __name__ == "__main__":
     print(tweet_data)
 
     # Distance testing
-    set1 = {"1", "2", "3"}
-    set2 = {"3", "4", "5"}
+    set1 = {"one", "two", "three"}
+    set2 = {"three", "four", "five"}
     distance = Jaccard_distance(set1, set2)
     print(distance)
 
