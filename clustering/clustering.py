@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def Jaccard_distance(set1, set2):
@@ -13,7 +14,7 @@ def read_csv():
         sep="|",
         header=None,
         usecols=[2],
-    )
+    ).head(50)
     return tweet_data
 
 
@@ -55,31 +56,25 @@ if __name__ == "__main__":
     tweet_data = preprocess(tweet_data)
 
     # Print
-    print(tweet_data)
 
     # Distance testing
-    #set1 = {"one", "two", "three"}
-    #set2 = {"three", "four", "five"}
-    #distance = Jaccard_distance(set1, set2)
-    #print(distance)
+    # set1 = {"one", "two", "three"}
+    # set2 = {"three", "four", "five"}
+    # distance = Jaccard_distance(set1, set2)
+    # print(distance)
 
+    print(tweet_data)
     # TODO: Spliting each row into a set then pass to distance
     # TODO: K means
     # for i in range(tweet_data.shape[0]):
     #     print(tweet_data.iloc[[i]])
-    list = [[]]
+    list = []
     for i in range(tweet_data.shape[0]):
-        set1 = set(tweet_data.iloc[i,:].str.split(expand=True).iloc[0,:])
-        for k in range(tweet_data.shape[0]):
-            set2 = set(tweet_data.iloc[k,:].str.split(expand=True).iloc[0,:])
-            list[i].append(Jaccard_distance(set1, set2))
+        set1 = set(tweet_data.iloc[i, :].str.split(expand=True).iloc[0, :])
+        for j in range(tweet_data.shape[0]):
+            set2 = set(tweet_data.iloc[j, :].str.split(expand=True).iloc[0, :])
+            distance = Jaccard_distance(set1, set2)
+            list.append(distance)
 
-        #if(i < 0):
-       #     set1 = set(tweet_data.iloc[i+1,:].str.split(expand=True).iloc[0,:])
-      #      set2 = set(tweet_data.iloc[i+2,:].str.split(expand=True).iloc[0,:])
-      #  else:
-       #     set1 = set(tweet_data.iloc[i,:].str.split(expand=True).iloc[0,:])
-      #      set2 = set(tweet_data.iloc[i+1,:].str.split(expand=True).iloc[0,:])
-
-    print(set1)
-    print(set2)
+    list = np.array(list).reshape(tweet_data.shape[0], tweet_data.shape[0])
+    print(list)
