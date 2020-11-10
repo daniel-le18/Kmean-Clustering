@@ -64,16 +64,9 @@ def K_mean(k, coverge, max_iteration, centroids):
             print(distance, "\n")
 
     list = np.array(list).reshape(k, int(len(list) / k))
-    #print(list)
+    print(list)
 
-    classes = []
-    for i in range(k):
-        shortest_distance = [x for x in list[i] if x != 0 and x != 1]
-       # TODO [[DONE]]: Recalculate the centroids
-        avg = sum(shortest_distance)
-        avg = avg / len(shortest_distance)
-        centroids[i] = avg
-    
+    cluster = []
 
 
 if __name__ == "__main__":
@@ -93,7 +86,6 @@ if __name__ == "__main__":
     for i in range(k):
         centroids.append(tweet_data.iloc[i, :])
 
-    
     # K-mean
     K_mean(k, converge, max_iteration, centroids)
     print("\n", centroids)
