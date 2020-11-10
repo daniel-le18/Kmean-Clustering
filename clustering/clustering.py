@@ -55,19 +55,7 @@ if __name__ == "__main__":
     tweet_data = read_csv()
     tweet_data = preprocess(tweet_data)
 
-    # Print
-
-    # Distance testing
-    # set1 = {"one", "two", "three"}
-    # set2 = {"three", "four", "five"}
-    # distance = Jaccard_distance(set1, set2)
-    # print(distance)
-
-    # print(tweet_data)
-    # TODO: Spliting each row into a set then pass to distance
-    # TODO: K means
-    # for i in range(tweet_data.shape[0]):
-    #     print(tweet_data.iloc[[i]])
+    # Getting the distances between points
     list = []
     for i in range(tweet_data.shape[0]):
         set1 = set(tweet_data.iloc[i, :].str.split(expand=True).iloc[0, :])
