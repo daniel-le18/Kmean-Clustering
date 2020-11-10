@@ -46,8 +46,13 @@ def preprocess(tweet_data):
     return tweet_data
 
 
-def K_mean():
-    pass
+def K_mean(k, coverge, max_iteration, centroids):
+    for i in range(max_iteration):
+        classes = {}
+        for i in range(k):
+            classes[i] = []
+
+    # TODO: Get the distance between each elements of centroids list with the remaining
 
 
 if __name__ == "__main__":
@@ -67,3 +72,17 @@ if __name__ == "__main__":
     list = np.array(list).reshape(tweet_data.shape[0], tweet_data.shape[0])
     print("\nDistance between each tweets: ")
     print(list)
+    print(tweet_data)
+
+    # Parameter for K mean
+    k = 5
+    converge = 0.0001
+    max_iteration = 500
+
+    # Choosing the first 5 tweets
+    centroids = []
+    for i in range(k):
+        centroids.append(tweet_data.iloc[i, :])
+
+    # K-mean
+    K_mean(k, converge, max_iteration, centroids)
