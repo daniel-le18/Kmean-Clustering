@@ -47,12 +47,31 @@ def preprocess(tweet_data):
 
 
 def K_mean(k, coverge, max_iteration, centroids):
-    for i in range(max_iteration):
-        classes = {}
-        for i in range(k):
-            classes[i] = []
+    # for i in range(max_iteration):
+    list = []
+    # for i in range(k):
+    #     list[i] = []
 
-    # TODO: Get the distance between each elements of centroids list with the remaining
+    # TODO:✔️💯  Get the distance between each elements of centroids list with the remaining
+    for i in range(k):
+        set1 = set(centroids[i].str.split(expand=True).iloc[0, :])
+        for j in range(tweet_data.shape[0]):
+            set2 = set(tweet_data.iloc[j, :].str.split(expand=True).iloc[0, :])
+            print(i, set1)
+            print(j, set2)
+            distance = Jaccard_distance(set1, set2)
+            list.append(distance)
+            print(distance, "\n")
+
+    list = np.array(list).reshape(k, int(len(list) / k))
+    print(list)
+
+    classes = []
+    for i in range(k):
+        shortest_distance = [x for x in list[i] if x != 0 and x != 1]
+        print(shortest_distance)
+
+    # TODO: Recalculate the centroids
 
 
 if __name__ == "__main__":
@@ -60,19 +79,7 @@ if __name__ == "__main__":
     tweet_data = read_csv()
     tweet_data = preprocess(tweet_data)
 
-    # Getting the distances between points
-    list = []
-    for i in range(tweet_data.shape[0]):
-        set1 = set(tweet_data.iloc[i, :].str.split(expand=True).iloc[0, :])
-        for j in range(tweet_data.shape[0]):
-            set2 = set(tweet_data.iloc[j, :].str.split(expand=True).iloc[0, :])
-            distance = Jaccard_distance(set1, set2)
-            list.append(distance)
-
-    list = np.array(list).reshape(tweet_data.shape[0], tweet_data.shape[0])
-    print("\nDistance between each tweets: ")
-    print(list)
-    print(tweet_data)
+    # print(tweet_data)
 
     # Parameter for K mean
     k = 5
@@ -84,5 +91,6 @@ if __name__ == "__main__":
     for i in range(k):
         centroids.append(tweet_data.iloc[i, :])
 
+    # print("\n", centroids)
     # K-mean
     K_mean(k, converge, max_iteration, centroids)
