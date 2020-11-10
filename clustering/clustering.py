@@ -67,6 +67,26 @@ def K_mean(k, coverge, max_iteration, centroids):
     print(list)
 
     cluster = []
+    for i in range(k):
+        shortest_distance = [x for x in list[i] if x != 0]
+
+        # New centroids
+        new_centroid_distance = min(shortest_distance)
+
+        # New centroids index
+        new_centroid_distance_index = shortest_distance.index(min(shortest_distance))
+
+        print(
+            "Shortest distance between the old centroid index",
+            i,
+            "and the new centroid index",
+            new_centroid_distance_index,
+            "centroids",
+            ":",
+            new_centroid_distance,
+        )
+        # TODO : Need to get text for these new centroid and append it in the cluster[]
+        # TODO : Recalculate the centroids by looping, maybe a big loop for the K-mean
 
 
 if __name__ == "__main__":
@@ -88,4 +108,4 @@ if __name__ == "__main__":
 
     # K-mean
     K_mean(k, converge, max_iteration, centroids)
-    print("\n", centroids)
+    # print("\n", centroids)
