@@ -45,6 +45,10 @@ def preprocess(tweet_data):
     return tweet_data
 
 
+def K_mean():
+    pass
+
+
 if __name__ == "__main__":
     # Read in and process data
     tweet_data = read_csv()
