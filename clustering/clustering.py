@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # distance = Jaccard_distance(set1, set2)
     # print(distance)
 
-    print(tweet_data)
+    # print(tweet_data)
     # TODO: Spliting each row into a set then pass to distance
     # TODO: K means
     # for i in range(tweet_data.shape[0]):
@@ -77,4 +77,5 @@ if __name__ == "__main__":
             list.append(distance)
 
     list = np.array(list).reshape(tweet_data.shape[0], tweet_data.shape[0])
+    print("\nDistance between each tweets: ")
     print(list)
