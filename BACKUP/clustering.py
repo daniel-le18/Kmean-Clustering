@@ -10,13 +10,13 @@ def Jaccard_distance(set1, set2):
     return distance
 
 
-def read_csv(instances):
+def read_csv():
     tweet_data = pd.read_csv(
         "https://raw.githubusercontent.com/daniel-le18/dataset/master/bbchealth.csv",
         sep="|",
         header=None,
         usecols=[2],
-    ).head(instances)
+    ).head(50)
     return tweet_data
 
 
@@ -56,11 +56,7 @@ def update_new_centroids(new_centroids_index_list, centroids, k):
     return new_centroids
 
 
-def calculate_sse(new_centroid_index, centroids, centroids_sse, k):
-    pass
-
-
-def K_mean(k, iteration, centroids):
+def K_mean(k, coverge, iteration, centroids):
     for z in range(iteration):
         print("\nIteration: ", z + 1)
         # # Create 5 cluster list
@@ -85,9 +81,7 @@ def K_mean(k, iteration, centroids):
         new_centroids_index_list = []
         for i in range(k):
             shortest_distance = [x for x in list[i] if x != 0]
-            cluster = [x for x in list[i] if x != 0 and x != 1]
 
-            print("Cluster size for", "centroid", i, ":", len(cluster))
             # New centroids
             new_centroid_distance = min(shortest_distance)
 
@@ -107,28 +101,23 @@ def K_mean(k, iteration, centroids):
 
         # TODO : Update the new centroids into the centroids[]
         new_centroids = update_new_centroids(new_centroids_index_list, centroids, k)
-        centroids_sse = centroids
         print("Previous centroids: ", centroids)
         centroids = copy.deepcopy(new_centroids)
 
-        calculate_sse(new_centroid_index, centroids, centroids_sse, k)
         print("\nNew centroids: ", new_centroids)
-        # print("SSE", sse)
 
 
 if __name__ == "__main__":
-    instances = int(input("How many tweets do you want to loop through: "))
-
     # Read in and process data
-    tweet_data = read_csv(instances)
+    tweet_data = read_csv()
     tweet_data = preprocess(tweet_data)
 
     # print(tweet_data)
 
     # Parameter for K mean
-    k = int(input("Please input number of cluster you want: "))
-
-    iteration = 5
+    k = 5
+    converge = 0.0001
+    iteration = 4
 
     # Choosing the first 5 tweets
     centroids = []
@@ -136,5 +125,5 @@ if __name__ == "__main__":
         centroids.append(tweet_data.iloc[i, :])
 
     # K-mean
-    K_mean(k, iteration, centroids)
+    K_mean(k, converge, iteration, centroids)
     # print("\n", centroids)
