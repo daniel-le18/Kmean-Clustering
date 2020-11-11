@@ -63,9 +63,8 @@ def calculate_sse(new_centroid_index, centroids, centroids_sse, k):
         set2 = set(centroids_sse[i].str.split(expand=True).iloc[0, :])
         distance = Jaccard_distance(set1, set2) ** 2
         sse += distance
-    #print(new_centroid_index)
-    #print(centroids)
-    print(sse)
+    # print(new_centroid_index)
+    # print(centroids)
     return sse
 
 
@@ -90,7 +89,7 @@ def K_mean(k, iteration, centroids):
                 # print(distance, "\n")
 
         list = np.array(list).reshape(k, int(len(list) / k))
-        #print(list)
+        # print(list)
 
         new_centroids_index_list = []
         for i in range(k):
@@ -118,11 +117,11 @@ def K_mean(k, iteration, centroids):
         # TODO : Update the new centroids into the centroids[]
         new_centroids = update_new_centroids(new_centroids_index_list, centroids, k)
         centroids_sse = centroids
-        #print("Previous centroids: ", centroids)
+        print("Previous centroids: ", centroids)
         centroids = copy.deepcopy(new_centroids)
-        
-        sse += calculate_sse(new_centroid_index, centroids, centroids_sse, k)
-       #print("\nNew centroids: ", new_centroids)
+
+        sse = calculate_sse(new_centroid_index, centroids, centroids_sse, k)
+        print("\nNew centroids: ", new_centroids)
         print("SSE", sse)
 
 
