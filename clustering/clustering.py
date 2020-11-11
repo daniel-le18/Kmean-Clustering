@@ -57,10 +57,20 @@ def update_new_centroids(new_centroids_index_list, centroids, k):
 
 
 def calculate_sse(new_centroid_index, centroids, centroids_sse, k):
-    pass
+    sse = 0.0
+    for i in range(k):
+        set1 = set(centroids[i].str.split(expand=True).iloc[0, :])
+        set2 = set(centroids_sse[i].str.split(expand=True).iloc[0, :])
+        distance = Jaccard_distance(set1, set2) ** 2
+        sse += distance
+    #print(new_centroid_index)
+    #print(centroids)
+    print(sse)
+    return sse
 
 
 def K_mean(k, iteration, centroids):
+    sse = 0
     for z in range(iteration):
         print("\nIteration: ", z + 1)
         # # Create 5 cluster list
@@ -108,12 +118,12 @@ def K_mean(k, iteration, centroids):
         # TODO : Update the new centroids into the centroids[]
         new_centroids = update_new_centroids(new_centroids_index_list, centroids, k)
         centroids_sse = centroids
-        print("Previous centroids: ", centroids)
+        #print("Previous centroids: ", centroids)
         centroids = copy.deepcopy(new_centroids)
-
-        calculate_sse(new_centroid_index, centroids, centroids_sse, k)
-        print("\nNew centroids: ", new_centroids)
-        # print("SSE", sse)
+        
+        sse += calculate_sse(new_centroid_index, centroids, centroids_sse, k)
+       # print("\nNew centroids: ", new_centroids)
+        print("SSE", sse)
 
 
 if __name__ == "__main__":
