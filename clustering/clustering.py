@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import copy
 
 
 def Jaccard_distance(set1, set2):
@@ -46,47 +47,61 @@ def preprocess(tweet_data):
     return tweet_data
 
 
-def K_mean(k, coverge, max_iteration, centroids):
-    # for i in range(max_iteration):
-    list = []
-    # for i in range(k):
-    #     list[i] = []
+def update_new_centroids(new_centroids_index_list, centroids, k):
+    new_centroids = []
+    new_centroid = tweet_data.iloc[new_centroids_index_list]
+    new_centroids.append(new_centroid)
+    return new_centroids
 
-    # TODO:✔️💯  Get the distance between each elements of centroids list with the remaining
-    for i in range(k):
-        set1 = set(centroids[i].str.split(expand=True).iloc[0, :])
-        for j in range(tweet_data.shape[0]):
-            set2 = set(tweet_data.iloc[j, :].str.split(expand=True).iloc[0, :])
-            print(i, set1)
-            print(j, set2)
-            distance = Jaccard_distance(set1, set2)
-            list.append(distance)
-            print(distance, "\n")
 
-    list = np.array(list).reshape(k, int(len(list) / k))
-    print(list)
+def K_mean(k, coverge, iteration, centroids):
+    for z in range(iteration):
+        print(type(centroids))
+        # # Create 5 cluster list
+        # for i in range(k):
+        #     cluster[i] = []
 
-    cluster = []
-    for i in range(k):
-        shortest_distance = [x for x in list[i] if x != 0]
+        # TODO:✔️💯  Get the distance between each elements of centroids list with the remaining
+        list = []
+        for i in range(k):
+            set1 = set(centroids[i].str.split(expand=True).iloc[0, :])
+            for j in range(tweet_data.shape[0]):
+                set2 = set(tweet_data.iloc[j, :].str.split(expand=True).iloc[0, :])
+                # print(i, set1)
+                # print(j, set2)
+                distance = Jaccard_distance(set1, set2)
+                list.append(distance)
+                # print(distance, "\n")
 
-        # New centroids
-        new_centroid_distance = min(shortest_distance)
+        list = np.array(list).reshape(k, int(len(list) / k))
+        # print(list)
 
-        # New centroids index
-        new_centroid_distance_index = shortest_distance.index(min(shortest_distance))
+        new_centroids_index_list = []
+        for i in range(k):
+            shortest_distance = [x for x in list[i] if x != 0]
 
-        print(
-            "Shortest distance between the old centroid index",
-            i,
-            "and the new centroid index",
-            new_centroid_distance_index,
-            "centroids",
-            ":",
-            new_centroid_distance,
-        )
-        # TODO : Need to get text for these new centroid and append it in the cluster[]
-        # TODO : Recalculate the centroids by looping, maybe a big loop for the K-mean
+            # New centroids
+            new_centroid_distance = min(shortest_distance)
+
+            # New centroids index
+            new_centroid_index = shortest_distance.index(min(shortest_distance))
+            new_centroids_index_list.append(new_centroid_index)
+
+            # print(
+            #     "Shortest distance between the old centroid index",
+            #     i,
+            #     "and the new centroid index",
+            #     new_centroid_index,
+            #     "centroids",
+            #     ":",
+            #     new_centroid_distance,
+            # )
+
+        # TODO : Update the new centroids into the centroids[]
+        new_centroids = update_new_centroids(new_centroids_index_list, centroids, k)
+        centroids = copy.deepcopy(new_centroids)
+        print("\nNew centroids: ", new_centroids)
+        print(type(centroids))
 
 
 if __name__ == "__main__":
@@ -99,13 +114,14 @@ if __name__ == "__main__":
     # Parameter for K mean
     k = 5
     converge = 0.0001
-    max_iteration = 500
+    iteration = 4
 
     # Choosing the first 5 tweets
     centroids = []
     for i in range(k):
         centroids.append(tweet_data.iloc[i, :])
 
+    print(centroids)
     # K-mean
-    K_mean(k, converge, max_iteration, centroids)
+    K_mean(k, converge, iteration, centroids)
     # print("\n", centroids)
