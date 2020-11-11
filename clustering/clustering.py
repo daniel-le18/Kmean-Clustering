@@ -56,7 +56,7 @@ def update_new_centroids(new_centroids_index_list, centroids, k):
     return new_centroids
 
 
-def K_mean(k, coverge, iteration, centroids):
+def K_mean(k, iteration, centroids):
     for z in range(iteration):
         print("\nIteration: ", z + 1)
         # # Create 5 cluster list
@@ -116,7 +116,6 @@ if __name__ == "__main__":
 
     # Parameter for K mean
     k = 5
-    converge = 0.0001
     iteration = 4
 
     # Choosing the first 5 tweets
@@ -125,5 +124,5 @@ if __name__ == "__main__":
         centroids.append(tweet_data.iloc[i, :])
 
     # K-mean
-    K_mean(k, converge, iteration, centroids)
+    K_mean(k, iteration, centroids)
     # print("\n", centroids)
