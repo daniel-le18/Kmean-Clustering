@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import copy
+from pandas import DataFrame
 
 
 def Jaccard_distance(set1, set2):
@@ -49,14 +50,15 @@ def preprocess(tweet_data):
 
 def update_new_centroids(new_centroids_index_list, centroids, k):
     new_centroids = []
-    new_centroid = tweet_data.iloc[new_centroids_index_list]
-    new_centroids.append(new_centroid)
+    for i in range(k):
+        new_centroid = tweet_data.iloc[new_centroids_index_list[i]]
+        new_centroids.append(new_centroid)
     return new_centroids
 
 
 def K_mean(k, coverge, iteration, centroids):
     for z in range(iteration):
-        print(type(centroids))
+        print("\nIteration: ", z + 1)
         # # Create 5 cluster list
         # for i in range(k):
         #     cluster[i] = []
@@ -99,9 +101,10 @@ def K_mean(k, coverge, iteration, centroids):
 
         # TODO : Update the new centroids into the centroids[]
         new_centroids = update_new_centroids(new_centroids_index_list, centroids, k)
+        print("Previous centroids: ", centroids)
         centroids = copy.deepcopy(new_centroids)
+
         print("\nNew centroids: ", new_centroids)
-        print(type(centroids))
 
 
 if __name__ == "__main__":
@@ -121,7 +124,6 @@ if __name__ == "__main__":
     for i in range(k):
         centroids.append(tweet_data.iloc[i, :])
 
-    print(centroids)
     # K-mean
     K_mean(k, converge, iteration, centroids)
     # print("\n", centroids)
