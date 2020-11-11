@@ -90,7 +90,7 @@ def K_mean(k, iteration, centroids):
                 # print(distance, "\n")
 
         list = np.array(list).reshape(k, int(len(list) / k))
-        # print(list)
+        #print(list)
 
         new_centroids_index_list = []
         for i in range(k):
@@ -122,7 +122,7 @@ def K_mean(k, iteration, centroids):
         centroids = copy.deepcopy(new_centroids)
         
         sse += calculate_sse(new_centroid_index, centroids, centroids_sse, k)
-       # print("\nNew centroids: ", new_centroids)
+       #print("\nNew centroids: ", new_centroids)
         print("SSE", sse)
 
 
